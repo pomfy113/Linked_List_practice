@@ -46,26 +46,72 @@ class LinkedList(object):
     def length(self):
         """Return the length of this linked list by traversing its nodes"""
         # TODO: count number of items
+        accum = 0
+        counter = self.head
+
+        while counter:
+            counter = counter.next
+            accum += 1
+        return accum
         pass
 
     def append(self, item):
         """Insert the given item at the tail of this linked list"""
         # TODO: append given item
+        new_node = Node(item)
+        if self.is_empty():
+            self.head = self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = self.tail.next
         pass
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list"""
         # TODO: prepend given item
+        new_node = Node(item)
+
+        new_node.next = self.head
+        self.head = new_node
         pass
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError"""
         # TODO: find given item and delete if found
+        # if item == self.head.data:
+        #     self.head = self.head.next
+        # elif item == self.tail.data:
+        #     print("That's a tail!")
+        #     # for i in range(self.length()-1):
+        #     #     self.tail = self.tail.next
+        #     # self.tail.next = None
+        # else:
+        #     print("That's a body!")
+
+        current = self.head
+        previous = None
+
+        while current:
+            if current.data == item:
+                if previous is None:
+                    self.head = self.head.next
+                else:
+                    previous.next = None
+            previous = current
+            current = current.next
+
         pass
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality"""
         # TODO: find item where quality(item) is True
+        counter = self.head
+
+        while counter != None:
+            if quality == counter.data:
+                return counter.data
+            else:
+                counter = counter.next
         pass
 
 
