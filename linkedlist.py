@@ -70,9 +70,11 @@ class LinkedList(object):
         """Insert the given item at the head of this linked list"""
         # TODO: prepend given item
         new_node = Node(item)
-
-        new_node.next = self.head
-        self.head = new_node
+        if self.is_empty():
+            self.head = self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head = new_node
         pass
 
     def delete(self, item):
@@ -87,28 +89,40 @@ class LinkedList(object):
         #     # self.tail.next = None
         # else:
         #     print("That's a body!")
-
         current = self.head
         previous = None
-
+        found = False
         while current:
             if current.data == item:
-                if previous is None:
+                if (previous is None) and (current.next is None):
+                    current.next = None
+                    self.head = self.tail = None
+                    found = True
+                    break
+                elif previous is None:
                     self.head = self.head.next
-                else:
+                    found = True
+                    break
+                elif current.next is None:
+                    self.tail = previous
                     previous.next = None
+                    found = True
+                    break
+                else:
+                    previous.next = current.next
+                    break
             previous = current
             current = current.next
-
+        if not found:
+            raise ValueError
         pass
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality"""
         # TODO: find item where quality(item) is True
         counter = self.head
-
-        while counter != None:
-            if quality == counter.data:
+        while counter:
+            if quality(counter.data):
                 return counter.data
             else:
                 counter = counter.next
@@ -123,6 +137,13 @@ def test_linked_list():
     ll.append('B')
     print(ll)
     ll.append('C')
+    print(ll)
+    print(ll)
+    ll.append('D')
+    print(ll)
+    ll.append('E')
+    print(ll)
+    ll.append('F')
     print(ll)
     print('head: ' + str(ll.head))
     print('tail: ' + str(ll.tail))

@@ -66,7 +66,6 @@ class LinkedListTest(unittest.TestCase):
         assert ll.head.data == 'B'
         assert ll.tail.data == 'C'
         ll.prepend('A')
-        assert ll.head.data == 'A'
         assert ll.tail.data == 'C'
 
     def test_delete(self):
@@ -78,6 +77,7 @@ class LinkedListTest(unittest.TestCase):
         assert ll.head.data == 'B'
         assert ll.tail.data == 'C'
         ll.delete('C')
+
         assert ll.head.data == 'B'
         assert ll.tail.data == 'B'
         ll.delete('B')
